@@ -9,10 +9,11 @@ connectDB();
 app.use(express.json());
 
 const authRoutes = require("./routes/auth");
+const messageRoutes = require("./routes/message");
 
 // Mount routes
 app.use("/api/auth", authRoutes);
-
+app.use("/api/messages", messageRoutes);
 app.get("/", (req, res) => res.send("API running"));
 
 const PORT = process.env.PORT || 5001;
