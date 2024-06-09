@@ -12,7 +12,6 @@ const createMessage = async (req, res) => {
     });
 
     const savedMessage = await newMessage.save();
-    console.log("Message saved:", savedMessage);
 
     res.json(savedMessage);
   } catch (error) {
@@ -20,6 +19,22 @@ const createMessage = async (req, res) => {
   }
 };
 
+const getMessagesBySender = async (req, res) => {
+  const senderId = req.params.senderId;
+
+  try {
+    const messages = await Message.find({ sender: senderId }).populate(
+      "sender recipient",
+      "name"
+    );
+    res.json(messages);
+  } catch (error) {
+    console.error("Error retrieving messages:", error.message);
+    res.status(500).send("Server error");
+  }
+};
+
 module.exports = {
   createMessage,
+  getMessagesBySender,
 };
