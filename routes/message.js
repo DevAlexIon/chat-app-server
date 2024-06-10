@@ -4,6 +4,7 @@ const auth = require("../middleware/auth");
 const {
   createMessage,
   getMessagesBySender,
+  getMessagesByRecepient,
 } = require("../controllers/messageController");
 
 // @route    POST api/messages
@@ -15,5 +16,10 @@ router.post("/", auth, createMessage);
 // @desc     Get messages by sender
 // @access   Private
 router.get("/sender/:senderId", auth, getMessagesBySender);
+
+// @route    GET api/messages/recipient/:recipientId
+// @desc     Get messages by recipient
+// @access   Private
+router.get("/recipient/:recipientId", auth, getMessagesByRecepient);
 
 module.exports = router;

@@ -34,7 +34,23 @@ const getMessagesBySender = async (req, res) => {
   }
 };
 
+const getMessagesByRecepient = async (req, res) => {
+  const receipientID = req.params.recipientId;
+
+  try {
+    const messages = await Message.find({ recipient: receipientID }).populate(
+      "sender recipient",
+      "name"
+    );
+    res.json(messages);
+  } catch (error) {
+    console.error("Error retrieving messages:", error.message);
+    res.status(500).send("Server error");
+  }
+};
+
 module.exports = {
   createMessage,
   getMessagesBySender,
+  getMessagesByRecepient,
 };
