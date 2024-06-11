@@ -4,7 +4,8 @@ const auth = require("../middleware/auth");
 const {
   createMessage,
   getMessagesBySender,
-  getMessagesByRecepient,
+  getMessagesByRecipient,
+  deleteMessage,
 } = require("../controllers/messageController");
 
 // @route    POST api/messages
@@ -20,6 +21,11 @@ router.get("/sender/:senderId", auth, getMessagesBySender);
 // @route    GET api/messages/recipient/:recipientId
 // @desc     Get messages by recipient
 // @access   Private
-router.get("/recipient/:recipientId", auth, getMessagesByRecepient);
+router.get("/recipient/:recipientId", auth, getMessagesByRecipient);
+
+// @route    DELETE api/messages/:messageId
+// @desc     Delete a message
+// @access   Private
+router.delete("/:messageId", auth, deleteMessage);
 
 module.exports = router;
