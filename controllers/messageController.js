@@ -58,6 +58,32 @@ const getMessagesByRecipient = async (req, res) => {
   }
 };
 
+const markMessageAsRead = async (req, res) => {
+  const { messageId } = req.params;
+  const { read } = req.body;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(messageId)) {
+      return res.status(400).json({ msg: "Invalid message ID" });
+    }
+
+    const message = await Message.findByIdAndUpdate(
+      messageId,
+      { read },
+      { new: true }
+    );
+
+    if (!message) {
+      return res.status(404).json({ msg: "Message not found" });
+    }
+
+    res.json(message);
+  } catch (error) {
+    console.error("Error updating message:", error.message);
+    res.status(500).send("Server error");
+  }
+};
+
 const deleteMessage = async (req, res) => {
   const messageId = req.params.messageId;
 
@@ -82,5 +108,6 @@ module.exports = {
   createMessage,
   getMessagesBySender,
   getMessagesByRecipient,
+  markMessageAsRead,
   deleteMessage,
 };

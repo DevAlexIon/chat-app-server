@@ -5,6 +5,7 @@ const {
   createMessage,
   getMessagesBySender,
   getMessagesByRecipient,
+  markMessageAsRead,
   deleteMessage,
 } = require("../controllers/messageController");
 
@@ -22,6 +23,11 @@ router.get("/sender/:senderId", auth, getMessagesBySender);
 // @desc     Get messages by recipient
 // @access   Private
 router.get("/recipient/:recipientId", auth, getMessagesByRecipient);
+
+// @route    PATCH api/messages/:messageId/read
+// @desc     Mark a message as read/unread
+// @access   Private
+router.patch("/:messageId/read", auth, markMessageAsRead);
 
 // @route    DELETE api/messages/:messageId
 // @desc     Delete a message
