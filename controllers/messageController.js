@@ -14,6 +14,8 @@ const createMessage = async (req, res) => {
 
     const savedMessage = await newMessage.save();
 
+    req.io.emit("newMessage", savedMessage);
+
     res.json(savedMessage);
   } catch (error) {
     res.status(500).send("Server error");
