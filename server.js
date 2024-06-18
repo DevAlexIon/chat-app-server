@@ -2,11 +2,14 @@ const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
 const connectDB = require("./config/db");
+const cors = require("cors");
 require("dotenv").config();
-
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
+app.use(cors());
+const authRoutes = require("./routes/auth");
+const messageRoutes = require("./routes/message");
 
 connectDB();
 
@@ -16,9 +19,6 @@ app.use((req, res, next) => {
   req.io = io;
   next();
 });
-
-const authRoutes = require("./routes/auth");
-const messageRoutes = require("./routes/message");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
