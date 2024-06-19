@@ -54,6 +54,9 @@ exports.login = async (req, res) => {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
 
+    user.lastLogin = new Date();
+    await user.save();
+
     const payload = {
       user: { id: user.id },
     };
@@ -76,6 +79,7 @@ exports.login = async (req, res) => {
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
+
     res.json(user);
   } catch (err) {
     console.error(err.message);
