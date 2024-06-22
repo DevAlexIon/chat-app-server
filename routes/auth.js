@@ -17,9 +17,4 @@ router.post("/register", register);
 // @access   Public
 router.post("/login", login);
 
-// @route    GET api/auth/profile
-// @desc     Get user profile
-// @access   Private
-router.get("/profile", auth, getProfile);
-
 module.exports = router;

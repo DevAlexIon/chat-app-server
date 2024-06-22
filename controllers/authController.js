@@ -67,20 +67,18 @@ exports.login = async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+
+        const userProfile = {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          lastLogin: user.lastLogin,
+          avatar: user.avatar,
+        };
+
+        res.json({ token, userProfile });
       }
     );
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-};
-
-exports.getProfile = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-
-    res.json(user);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
