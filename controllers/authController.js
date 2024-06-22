@@ -29,7 +29,15 @@ exports.register = async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+
+        const userProfile = {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          lastLogin: user.lastLogin,
+          avatar: user.avatar,
+        };
+        res.json({ token, userProfile });
       }
     );
   } catch (err) {
