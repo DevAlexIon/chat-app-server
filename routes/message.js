@@ -17,7 +17,7 @@ router.post("/", auth, createMessage);
 // @route    GET api/messages/sender/:senderId
 // @desc     Get messages by sender
 // @access   Private
-router.get("/sender/:senderId", auth, getMessagesBySender);
+router.get("/:senderId", auth, getMessagesBySender);
 
 // @route    GET api/messages/recipient/:recipientId
 // @desc     Get messages by recipient

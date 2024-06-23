@@ -1,11 +1,30 @@
 const Message = require("../models/Message");
 const mongoose = require("mongoose");
+const User = require("../models/User");
 
 const createMessage = async (req, res) => {
   const { recipientId, content } = req.body;
   const senderId = req.user.id;
 
   try {
+    const sender = await User.findById(senderId).populate("friends");
+
+    if (!sender) {
+      return res.status(404).json({ msg: "Sender not found" });
+    }
+
+    if (senderId === recipientId) {
+      return res.status(403).json({ msg: "You cannot message yourself" });
+    }
+
+    const isFriend = sender.friends.some(
+      (friend) => friend._id.toString() === recipientId
+    );
+
+    if (!isFriend) {
+      return res.status(403).json({ msg: "You can only message your friends" });
+    }
+
     const newMessage = new Message({
       sender: senderId,
       recipient: recipientId,

@@ -24,6 +24,24 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    receivedRequests: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FriendRequest",
+      },
+    ],
+    sentRequests: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FriendRequest",
+      },
+    ],
   },
   { timestamps: true }
 );

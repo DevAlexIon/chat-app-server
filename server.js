@@ -10,6 +10,7 @@ const io = socketIo(server);
 app.use(cors());
 const authRoutes = require("./routes/auth");
 const messageRoutes = require("./routes/message");
+const friendRequestRoutes = require("./routes/friendRequest");
 
 connectDB();
 
@@ -21,7 +22,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/messages", messageRoutes);
+app.use("/messages", messageRoutes);
+app.use("/friends", friendRequestRoutes);
 
 app.get("/", (req, res) => res.send("API running"));
 
