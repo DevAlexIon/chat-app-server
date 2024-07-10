@@ -17,8 +17,7 @@ const UserSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default:
-        "https://png.pngtree.com/png-clipart/20210310/original/pngtree-graphic-default-avatar-png-image_5938131.jpg",
+      default: "https://www.svgrepo.com/show/335455/profile-default.svg",
     },
     lastLogin: {
       type: Date,
