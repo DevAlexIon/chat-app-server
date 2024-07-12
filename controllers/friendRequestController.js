@@ -136,3 +136,23 @@ exports.getFriendList = async (req, res) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
+
+exports.searchUsers = async (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    return res.status(400).json({ msg: "Search query is required" });
+  }
+
+  try {
+    const users = await User.find({
+      username: { $regex: query, $options: "i" },
+      _id: { $ne: req.user.id },
+    }).select("name username");
+
+    res.json(users);
+  } catch (error) {
+    console.error("Error searching users:", error.message);
+    res.status(500).send("Server error");
+  }
+};

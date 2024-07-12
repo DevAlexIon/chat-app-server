@@ -6,6 +6,7 @@ const {
   getFriendRequests,
   updateFriendRequest,
   getFriendList,
+  searchUsers,
 } = require("../controllers/friendRequestController");
 
 // @route    POST /friends
@@ -23,6 +24,14 @@ router.get("/", auth, getFriendRequests);
 // @access   Private
 router.patch("/:id", auth, updateFriendRequest);
 
+// @route    GET /friends/list
+// @desc     Retrieve friend requests
+// @access   Private
 router.get("/list", auth, getFriendList);
+
+// @route    GET /friends/search
+// @desc     Search for new friends
+// @access   Private
+router.get("/search", auth, searchUsers);
 
 module.exports = router;
