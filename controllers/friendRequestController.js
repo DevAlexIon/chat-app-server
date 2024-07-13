@@ -148,7 +148,7 @@ exports.searchUsers = async (req, res) => {
     const users = await User.find({
       username: { $regex: query, $options: "i" },
       _id: { $ne: req.user.id },
-    }).select("name username");
+    }).select("name username avatar");
 
     res.json(users);
   } catch (error) {
