@@ -21,6 +21,15 @@ exports.sendFriendRequest = async (req, res) => {
       return res.status(400).json({ msg: "Friend request already sent" });
     }
 
+    const existingFriend = await User.findOne({
+      _id: requesterId,
+      friends: recipientId,
+    });
+
+    if (existingFriend) {
+      return res.status(400).json({ msg: "You are already friends" });
+    }
+
     const friendRequest = new FriendRequest({
       requester: requesterId,
       recipient: recipientId,
